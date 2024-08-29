@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, startWith, Subscription } from 'rxjs';
+import { BookVolumeInfo } from 'src/app/models/book-volume-info';
 import { Book, Item } from 'src/app/models/interfaces';
 import { LivroService } from 'src/app/services/livro.service';
 
@@ -38,21 +39,12 @@ export class ListaLivrosComponent implements OnInit, OnDestroy{
   searchBooks(): void {
     this.subscription = this._livroService.getLivros(this.search).subscribe({
       next: (items) => this.books = this._convertToBook(items),
-      error: (erro: HttpErrorResponse) => console.error(erro),
-      complete: () => console.log('completado')
+      error: (erro: HttpErrorResponse) => console.error(erro)
     })
   }
 
   private _convertToBook(items: Item[]) {
-    return items.map(item => ({
-      title: item.volumeInfo?.title,
-      authors: item.volumeInfo?.authors,
-      publisher: item.volumeInfo?.publisher,
-      publishedDate: item.volumeInfo?.publishedDate,
-      description: item.volumeInfo?.description,
-      previewLink: '', //TODO: VERIFICAR
-      thumbnail: item.volumeInfo?.imageLinks?.thumbnail
-    }))
+    return items.map(item => new BookVolumeInfo(item));
   }
 
 }
