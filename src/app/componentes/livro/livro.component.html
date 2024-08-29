@@ -5,7 +5,7 @@
   <div class="info-card">
     <p class="titulo">{{ book?.title | slice:0:30 }}</p>
     <p class="informacoes">Autoria:</p>
-    <p class="resultado">{{ book?.authors }}</p>
+    <p class="resultado">{{ book?.authors | firstValue }}</p>
     <p class="informacoes">Data de publicação:</p>
     <p class="resultado">{{ book?.publishedDate | date: 'dd/MM/yyyy'}}</p>
     <p class="informacoes">Editora:</p>
