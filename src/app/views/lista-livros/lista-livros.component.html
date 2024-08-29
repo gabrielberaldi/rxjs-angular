@@ -2,14 +2,14 @@
   <header>Que livro você procura?</header>
   <div class="busca">
     <input type="search" [(ngModel)]="search">
-    <button (click)="buscarLivros()">
+    <button (click)="searchBooks()">
       <img src="assets/imagens/icone-busca.png" alt="Lupa de cor roxa">
     </button>
   </div>
   <p>Busque por assunto, autoria, nome...</p>
-<div class="container-card" *ngIf="listaLivros?.length > 0, else telaInicial">
-  <div *ngFor="let livro of listaLivros">
-    <app-livro [livro]="livro"></app-livro>
+<div class="container-card" *ngIf="books?.length > 0, else telaInicial">
+  <div *ngFor="let book of books">
+    <app-livro [book]="book"></app-livro>
   </div>
 </div>
 <ng-template #telaInicial>
