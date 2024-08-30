@@ -15,10 +15,7 @@ export class LivroService {
     private _http: HttpClient
   ) { }
 
-  getLivros(value: string): Observable<Item[]> {
+  getLivros(value: string): Observable<BooksResponse> {
     return this._http.get<BooksResponse>(`${this._url}`, { params: { q: value } })
-    .pipe(
-      map((resultado) => resultado.items)
-    )
   }
 }
