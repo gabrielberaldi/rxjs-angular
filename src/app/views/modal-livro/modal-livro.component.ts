@@ -12,7 +12,7 @@ export class ModalLivroComponent {
 
   constructor() { }
 
-  @Input() book: Book;
+  @Input() book!: Book;
   @Output() mudouModal = new EventEmitter()
   statusModal: boolean = true;
 
@@ -29,7 +29,7 @@ export class ModalLivroComponent {
   }
   
   lerPrevia(): void {
-    window.open( '_blank');
+    window.open( this.book.previewLink, '_blank');
   }
 
 }

@@ -16,7 +16,7 @@ export class BookVolumeInfo implements Book {
     this.publisher = volumeInfo?.publisher;
     this.publishedDate = volumeInfo?.publishedDate;
     this.description = volumeInfo?.description;
-    this.previewLink = ''; //TODO = VERIFICAR
+    this.previewLink = volumeInfo.previewLink;
     this.thumbnail = volumeInfo?.imageLinks?.thumbnail
   }
 

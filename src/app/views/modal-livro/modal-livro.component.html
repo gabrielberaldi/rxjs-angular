@@ -2,9 +2,9 @@
   <div class="card">
     <img class="imagem" src="{{ book.thumbnail ?? 'assets/imagens/capa-indisponivel.png'}}" alt="Capa do livro">
     <div class="info-card">
-      <p class="titulo">{{ book }}</p>
+      <p class="titulo">{{ book?.title }}</p>
       <p class="informacoes">Autoria:</p>
-      <p class="resultado">{{ book?.authors | firstValue}}</p>
+      <p class="resultado">{{ book?.authors | slice:0:20}}</p>
       <p class="informacoes">Data de publicação:</p>
       <p class="resultado">{{ book?.publishedDate | date: 'dd/MM/yyyy' }}</p>
       <p class="informacoes">Editora:</p>
@@ -16,7 +16,7 @@
       </button>
     <div class="sinopse">
       <h4 class="informacoes">Sinopse</h4>
-      <p class="resultado">{{ book }}</p>
+      <p class="resultado">{{ book?.description }}</p>
     </div>
   </div>
   <div class="overlay"></div>

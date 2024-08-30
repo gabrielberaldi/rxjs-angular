@@ -25,6 +25,7 @@ export interface VolumeInfo {
   language: string;
   infoLink: string;
   canonicalVolumeLink: string;
+  previewLink: string;
 }
 
 export interface ImageLinks {

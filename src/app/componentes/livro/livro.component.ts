@@ -11,7 +11,7 @@ export class LivroComponent {
   @Input() book!: Book;
   modalAberto: boolean;
 
-  onModelChange(evento: boolean) {
+  onModalChange(evento: boolean): void {
     this.modalAberto = evento;
   }
 }
