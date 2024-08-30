@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { debounceTime, distinctUntilChanged, startWith, Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, map, Observable, startWith, Subscription, switchMap } from 'rxjs';
 import { BookVolumeInfo } from 'src/app/models/book-volume-info';
 import { Book, Item } from 'src/app/models/interfaces';
 import { LivroService } from 'src/app/services/livro.service';
@@ -11,36 +11,26 @@ import { LivroService } from 'src/app/services/livro.service';
   templateUrl: './lista-livros.component.html',
   styleUrls: ['./lista-livros.component.css']
 })
-export class ListaLivrosComponent implements OnInit, OnDestroy{
+export class ListaLivrosComponent implements OnInit {
 
-  // search: FormControl = new FormControl('');
-  search: string = '';
+  search: FormControl = new FormControl('');
   books: Book[] = [];
-  subscription: Subscription;
+  filteredBooks$: Observable<Book[]>;
 
-  livro: Book;
+  private readonly _time: number = 300;
 
   constructor(
     private _livroService: LivroService
   ) { }
 
   ngOnInit(): void {
-    // this.search.valueChanges.pipe(
-    //   startWith(''),
-    //   distinctUntilChanged(),
-    //   debounceTime(300)
-    // )
-  }
-
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
-
-  searchBooks(): void {
-    this.subscription = this._livroService.getLivros(this.search).subscribe({
-      next: (items) => this.books = this._convertToBook(items),
-      error: (erro: HttpErrorResponse) => console.error(erro)
-    })
+    this.filteredBooks$ = this.search.valueChanges.pipe(
+      debounceTime(this._time),
+      filter((value) => value.length >= 3),
+      distinctUntilChanged(),
+      switchMap((value) => this._livroService.getLivros(value)),
+      map((items) => this.books = this._convertToBook(items))
+    );
   }
 
   private _convertToBook(items: Item[]) {
